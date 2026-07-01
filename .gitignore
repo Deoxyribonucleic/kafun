@@ -1,0 +1,40 @@
+# environments
+venv/
+__pycache__/
+*.pyc
+cache/
+
+# large model checkpoints
+*.pth
+
+# datasets & images (too large / not code)
+data/
+data2/
+dataset/
+images/
+sorted/
+sorted_hinoki/
+new_hinoki/
+data_bg*/
+data_closeup/
+data_cb/
+*.jpg
+*.jpeg
+*.png
+
+# GBIF raw archives
+multimedia.txt
+occurrence.txt
+verbatim.txt
+meta.xml
+metadata.xml
+citations.txt
+rights.txt
+
+# generated outputs
+*.html
+*.graphml
+kde.png
+
+# keep the small data samples if you want — comment out below to include
+detections.json
