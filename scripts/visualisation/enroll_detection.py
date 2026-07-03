@@ -4,12 +4,14 @@ Classify a photo and, if it's sugi/hinoki with a location, add it to detections.
   python3 enroll_detection.py photo.jpg                 # uses GPS from photo EXIF
   python3 enroll_detection.py photo.jpg --lat 34.809 --lon 135.560   # manual location
 """
-import argparse, json, os, datetime, torch
+import argparse, json, os, sys, datetime, torch
 import torch.nn.functional as F
 from PIL import Image
 from PIL.ExifTags import TAGS, GPSTAGS
 from torchvision import transforms
 from transformers import CLIPModel, CLIPProcessor, AutoModelForImageSegmentation
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "src"))
 from model_utils import build_model
 
 ap = argparse.ArgumentParser()

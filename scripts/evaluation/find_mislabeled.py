@@ -18,10 +18,13 @@
 import argparse
 import os
 import shutil
+import sys
 import torch
-import torch.nn as nn
 import torch.nn.functional as F
-from torchvision import datasets, transforms, models
+from torchvision import datasets, transforms
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "src"))
+from model_utils import build_model
 
 
 def collect(split_dir, model, classes, device, tf, out_root):
@@ -60,8 +63,8 @@ def main():
 
     ckpt = torch.load(args.model, map_location=device)
     classes = ckpt["classes"]
-    model = models.resnet18()
-    model.fc = nn.Linear(model.fc.in_features, len(classes))
+    arch = ckpt.get("arch", "resnet18")  # 古いチェックポイント用にフォールバック
+    model = build_model(arch, len(classes), head=ckpt.get("head", "linear"), pretrained=False)
     model.load_state_dict(ckpt["state_dict"])
     model = model.to(device).eval()
 

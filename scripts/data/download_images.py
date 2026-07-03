@@ -1,19 +1,4 @@
-"""
-GBIF multimedia.txt から画像をダウンロードするスクリプト。
 
-使い方:
-    python download_images.py --multimedia multimedia.txt --out images/sugi --limit 300
-
-主な動作:
-    - multimedia.txt（タブ区切り）を読み、画像URL(identifier列)を取得
-    - publisher でフィルタ（デフォルトは iNaturalist のみ採用）
-    - 指定フォルダに連番で保存
-    - リンク切れ・タイムアウトは飛ばして継続
-    - サーバ負荷を抑えるため各取得の間に待機
-
-注意: requests が必要です。未インストールなら:
-    pip install requests
-"""
 import argparse
 import csv
 import os

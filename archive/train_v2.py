@@ -3,10 +3,12 @@ Training with the paper's techniques: dropout head, optional frozen backbone, ar
   python3 train_v2.py --data_dir ./data_cb --arch resnet50 --head dropout --out kafun_cb.pth
   add --freeze to train only the head (backbone frozen)
 """
-import argparse, os, torch
+import argparse, os, sys, torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 from model_utils import build_model
 
 def build_loaders(data_dir, batch_size):

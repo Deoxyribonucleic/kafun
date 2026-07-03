@@ -8,16 +8,16 @@ cache/
 *.pth
 
 # datasets & images (too large / not code)
-data/
-data2/
-dataset/
-images/
-sorted/
-sorted_hinoki/
-new_hinoki/
-data_bg*/
-data_closeup/
-data_cb/
+/data/
+/data2/
+/dataset/
+/images/
+/sorted/
+/sorted_hinoki/
+/new_hinoki/
+/data_bg*/
+/data_closeup/
+/data_cb/
 *.jpg
 *.jpeg
 *.png

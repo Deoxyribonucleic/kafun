@@ -1,6 +1,8 @@
-import argparse, os, torch
+import argparse, os, sys, torch
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 from model_utils import build_model
 
 def main():

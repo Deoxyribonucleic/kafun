@@ -9,20 +9,13 @@
 """
 import argparse
 import os
+import sys
 import torch
-import torch.nn as nn
 from torch.utils.data import DataLoader
-from torchvision import datasets, transforms, models
+from torchvision import datasets, transforms
 
-def build_model(arch, num_classes):
-    if arch == "resnet18":
-        model = models.resnet18(weights=None)
-    elif arch == "resnet50":
-        model = models.resnet50(weights=None)
-    else:
-        raise ValueError(f"未知のアーキテクチャ: {arch}")
-    model.fc = nn.Linear(model.fc.in_features, num_classes)
-    return model
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "src"))
+from model_utils import build_model
 
 def main():
     ap = argparse.ArgumentParser()
@@ -36,7 +29,7 @@ def main():
     classes = ckpt["classes"]
     n = len(classes)
     arch = ckpt.get("arch", "resnet18")
-    model = build_model(arch, n)
+    model = build_model(arch, n, head=ckpt.get("head", "linear"), pretrained=False)
     model.load_state_dict(ckpt["state_dict"])
     model = model.to(device).eval()
 

@@ -14,10 +14,14 @@ ResNet18版からの変更点:
 """
 import argparse
 import os
+import sys
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
-from torchvision import datasets, transforms, models
+from torchvision import datasets, transforms
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "src"))
+from model_utils import build_model
 
 
 def build_loaders(data_dir, batch_size):
@@ -66,9 +70,7 @@ def main():
     print("classes:", classes)
 
     # 学習済み ResNet50 を読み込み、最後の層だけ自分のクラス数に差し替える
-    model = models.resnet50(weights=models.ResNet50_Weights.DEFAULT)
-    model.fc = nn.Linear(model.fc.in_features, len(classes))
-    model = model.to(device)
+    model = build_model("resnet50", len(classes)).to(device)
 
     criterion = nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)

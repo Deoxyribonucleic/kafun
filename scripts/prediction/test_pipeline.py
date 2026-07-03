@@ -5,11 +5,13 @@ final outcome (including correct rejections).
   python3 test_pipeline.py --model kafun_model.pth
 testset layout: testset/{sugi,hinoki,other,notplant,far}/*.jpg
 """
-import argparse, os, glob, torch
+import argparse, os, sys, glob, torch
 import torch.nn.functional as F
 from PIL import Image
 from torchvision import transforms
 from transformers import CLIPModel, CLIPProcessor, AutoModelForImageSegmentation
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "src"))
 from model_utils import build_model
 
 ap = argparse.ArgumentParser()

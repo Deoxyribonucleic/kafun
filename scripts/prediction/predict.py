@@ -8,21 +8,15 @@
     python3 predict.py test.jpg --thresh 0.8
 """
 import argparse
+import os
+import sys
 import torch
-import torch.nn as nn
 import torch.nn.functional as F
-from torchvision import models, transforms
+from torchvision import transforms
 from PIL import Image
 
-def build_model(arch, num_classes):
-    if arch == "resnet18":
-        model = models.resnet18(weights=None)
-    elif arch == "resnet50":
-        model = models.resnet50(weights=None)
-    else:
-        raise ValueError(f"未知のアーキテクチャ: {arch}")
-    model.fc = nn.Linear(model.fc.in_features, num_classes)
-    return model
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "src"))
+from model_utils import build_model
 
 def main():
     ap = argparse.ArgumentParser()
@@ -35,7 +29,7 @@ def main():
     ckpt = torch.load(args.model, map_location="cpu")
     classes = ckpt["classes"]
     arch = ckpt.get("arch", "resnet18")  # 古いチェックポイント用にフォールバック
-    model = build_model(arch, len(classes))
+    model = build_model(arch, len(classes), head=ckpt.get("head", "linear"), pretrained=False)
     model.load_state_dict(ckpt["state_dict"])
     model.eval()
 
